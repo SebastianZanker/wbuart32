@@ -83,13 +83,13 @@ void axiluart_tx_str_blocking(uint32_t base_address, char *str)
                 break;
             }
         }
-        axiluart_tx_byte_blocking(base_address, *str);
+        axiluart_tx_byte(base_address, *str);
         str++;
     }
 }
 
-// transmit a single byte
-void axiluart_tx_byte_blocking(uint32_t base_address, char c)
+// transmit a single byte, check before if enough space is available
+void axiluart_tx_byte(uint32_t base_address, char c)
 {
     uint8_t volatile * const p_reg = (uint8_t *)(base_address + REG_TX_DATA_ADDR);
     *p_reg = c;
@@ -102,6 +102,15 @@ uint16_t axiluart_get_rxlevel(uint32_t base_address)
     reg_fifo_t reg;
     reg.value = *p_reg;
     return (uint16_t)reg.field.rx_fill;
+}
+
+// get TX FIFO fill level
+uint16_t axiluart_get_txlevel(uint32_t base_address)
+{
+    uint8_t volatile * const p_reg = (uint8_t *)(base_address + REG_FIFO_ADDR);
+    reg_fifo_t reg;
+    reg.value = *p_reg;
+    return (uint16_t)reg.field.tx_fill;
 }
 
 // read the RX FIFO

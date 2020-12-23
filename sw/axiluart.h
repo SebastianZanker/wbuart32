@@ -104,8 +104,9 @@ typedef union {
 // functions (all functions with base address in case there is more than one UART core
 void axiluart_set_baudrate(uint32_t base_address, uint32_t divider);
 void axiluart_tx_str_blocking(uint32_t base_address, char *str);
-void axiluart_tx_byte_blocking(uint32_t base_address, char str);
+void axiluart_tx_byte(uint32_t base_address, char str);
 uint16_t axiluart_get_rxlevel(uint32_t base_address);
+uint16_t axiluart_get_txlevel(uint32_t base_address);
 void axiluart_read_rxfifo(uint32_t base_address, char* str, uint16_t num);
 void axiluart_set_parity(uint32_t base_address, parity_e par);
 
