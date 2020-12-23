@@ -1,3 +1,23 @@
+/*  Description:
+    A simple software interface for the WBUART32 core
+    developed by Dan Gisselquist, Ph.D.
+    
+    Copyright (C) 2020  Sebastian Zanker
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+*/
+
 #ifndef AXILUART_H
 #define AXILUART_H
 
@@ -84,5 +104,6 @@ void axiluart_set_baudrate(uint32_t base_address, uint32_t divider);
 void axiluart_tx_str_blocking(uint32_t base_address, char *str);
 void axiluart_tx_byte_blocking(uint32_t base_address, char str);
 uint16_t axiluart_get_rxlevel(uint32_t base_address);
+void axiluart_read_rxfifo(uint32_t base_address, char* str, uint16_t num);
 
 #endif
