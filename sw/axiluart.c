@@ -30,6 +30,46 @@ void axiluart_set_baudrate(uint32_t base_address, uint32_t divider)
     *p_reg = reg.value;
 }
 
+// parity settings
+void axiluart_set_parity(uint32_t base_address, parity_e par)
+{
+    reg_setup_t reg;
+    // read-modify-write
+    uint32_t volatile * const p_reg = (uint32_t *)(base_address + REG_SETUP_ADDR);
+    reg.value = *p_reg;
+    switch(par) {
+        case ODD:
+            reg.field.P = 1;
+            reg.field.F = 0;
+            reg.field.T = 0;
+            break;
+        case EVEN:
+            reg.field.P = 1;
+            reg.field.F = 0;
+            reg.field.T = 1;
+            break;
+        case SPACE:
+            reg.field.P = 1;
+            reg.field.F = 1;
+            reg.field.T = 0;
+            break;
+        case MARK:
+            reg.field.P = 1;
+            reg.field.F = 1;
+            reg.field.T = 1;
+            break;
+        case NO_PARITY:
+            reg.field.P = 0;
+            reg.field.F = 0;
+            reg.field.T = 0;
+            break;
+        default:;
+    }
+    // save the register
+    *p_reg = reg.value;
+}
+
+
 // send a whole string without interrupts (blocking)
 void axiluart_tx_str_blocking(uint32_t base_address, char *str)
 {

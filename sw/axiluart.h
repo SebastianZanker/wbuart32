@@ -32,6 +32,8 @@
 #define REG_RX_DATA_ADDR        0x08
 #define REG_TX_DATA_ADDR        0x0C
 
+// Parity
+typedef enum {ODD, EVEN, SPACE, MARK, NO_PARITY} parity_e;
 
 // typedefs for the 4 registers
 
@@ -105,5 +107,6 @@ void axiluart_tx_str_blocking(uint32_t base_address, char *str);
 void axiluart_tx_byte_blocking(uint32_t base_address, char str);
 uint16_t axiluart_get_rxlevel(uint32_t base_address);
 void axiluart_read_rxfifo(uint32_t base_address, char* str, uint16_t num);
+void axiluart_set_parity(uint32_t base_address, parity_e par);
 
 #endif
