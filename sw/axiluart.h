@@ -32,6 +32,10 @@
 #define REG_RX_DATA_ADDR        0x08
 #define REG_TX_DATA_ADDR        0x0C
 
+// define how bit the array for receiving data shall be
+#define MAX_DATA_SIZE           32
+
+
 // Parity
 typedef enum {ODD, EVEN, SPACE, MARK, NO_PARITY} parity_e;
 
@@ -101,7 +105,15 @@ typedef union {
 } reg_txdata_t;
 
 
-// functions (all functions with base address in case there is more than one UART core
+// structure for receiving data via interrupts
+typedef struct {
+    uint8_t rxbytes[MAX_DATA_SIZE];
+    uint8_t wr_ptr;
+    uint8_t rd_ptr;
+} rx_data_t;
+
+
+// all functions with base address in case there is more than one UART core
 void axiluart_set_baudrate(uint32_t base_address, uint32_t divider);
 void axiluart_tx_str_blocking(uint32_t base_address, char *str);
 void axiluart_tx_byte(uint32_t base_address, char str);
@@ -109,5 +121,12 @@ uint16_t axiluart_get_rxlevel(uint32_t base_address);
 uint16_t axiluart_get_txlevel(uint32_t base_address);
 void axiluart_read_rxfifo(uint32_t base_address, char* str, uint16_t num);
 void axiluart_set_parity(uint32_t base_address, parity_e par);
+
+// ISRs (so far only possible for one UART module)
+void uart_rx_int();
+void uart_tx_int();
+void uart_rxfifo_int();
+void uart_txfifo_int();
+rx_data_t* get_rx_data();
 
 #endif

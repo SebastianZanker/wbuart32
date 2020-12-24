@@ -98,7 +98,7 @@ void axiluart_tx_byte(uint32_t base_address, char c)
 // get RX FIFO fill level
 uint16_t axiluart_get_rxlevel(uint32_t base_address)
 {
-    uint8_t volatile * const p_reg = (uint8_t *)(base_address + REG_FIFO_ADDR);
+    uint32_t volatile * const p_reg = (uint32_t *)(base_address + REG_FIFO_ADDR);
     reg_fifo_t reg;
     reg.value = *p_reg;
     return (uint16_t)reg.field.rx_fill;
@@ -107,7 +107,7 @@ uint16_t axiluart_get_rxlevel(uint32_t base_address)
 // get TX FIFO fill level
 uint16_t axiluart_get_txlevel(uint32_t base_address)
 {
-    uint8_t volatile * const p_reg = (uint8_t *)(base_address + REG_FIFO_ADDR);
+    uint32_t volatile * const p_reg = (uint32_t *)(base_address + REG_FIFO_ADDR);
     reg_fifo_t reg;
     reg.value = *p_reg;
     return (uint16_t)reg.field.tx_fill;
@@ -117,7 +117,7 @@ uint16_t axiluart_get_txlevel(uint32_t base_address)
 void axiluart_read_rxfifo(uint32_t base_address, char* str, uint16_t num)
 {
     uint16_t i = 0;
-    uint8_t volatile * const p_reg = (uint8_t *)(base_address + REG_RX_DATA_ADDR);
+    uint32_t volatile * const p_reg = (uint32_t *)(base_address + REG_RX_DATA_ADDR);
     reg_rxdata_t reg;
     for (i = 0; i < num; i++) {
         reg.value = *p_reg;
